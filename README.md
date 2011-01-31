@@ -102,9 +102,9 @@ Or, install all advertised dependencies from `package.json`
 
 nodester-client has a small set of configuration keys, and it'll try to guess sensible defaults so you don't have to type them.
 
-- **root**
-  * Where `nodester-client` expects to talk to the API service
-  * Defaults to http://nodester.com/
+- **base**
+  * Server where `nodester-client` expects to talk to the API service
+  * Defaults to `api.nodester.com`
 - **email**
   * The email you want to receive a coupon to or register your user with
   * Defaults to your email from git, as reported by `git config user.email`

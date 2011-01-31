@@ -38,9 +38,9 @@ what you should know:
 
 ## KEYS
 
-* <root>:
-  Where `nodester-client` expects to talk to the API service  
-  default: http://nodester.com/
+* <base>:
+  Server where `nodester-client` expects to talk to the API service  
+  default: "api.nodester.com"
 * <email>:
   Receive a coupon or register your user to this address  
   default: your email from git, as reported by `git config user.email`
@@ -58,7 +58,7 @@ what you should know:
   default: "main" as described in `package.json`, falls back to `server.js` or `app.js` if available, and in that order
 * <pass>:
   Password to authenticate with nodester  
-  default: ... nothing. Prompt the user every time by default.
+  default: Prompt the user every time by default.
 * <remote>:
   Name of git remote to connect to nodester  
   default: "nodester"
