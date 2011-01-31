@@ -34,11 +34,11 @@ Out of the box, nodester tries to pick smart defaults\. In some cases, this defa
 .SH "KEYS"
 .
 .TP
-\fIroot\fR
-Where \fBnodester\-client\fR expects to talk to the API service
+\fIbase\fR
+Server where \fBnodester\-client\fR expects to talk to the API service
 .
 .br
-default: http://nodester\.com/
+default: "api\.nodester\.com"
 .
 .TP
 \fIemail\fR
@@ -80,7 +80,7 @@ default: "main" as described in \fBpackage\.json\fR, falls back to \fBserver\.js
 Password to authenticate with nodester
 .
 .br
-default: \.\.\. nothing\. Prompt the user every time by default\.
+default: Prompt the user every time by default\.
 .
 .TP
 \fIremote\fR

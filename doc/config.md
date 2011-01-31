@@ -38,7 +38,7 @@ what you should know:
 
 ## KEYS
 
-* <base>:
+* _base_:
   Server where `nodester-client` expects to talk to the API service  
   default: "api.nodester.com"
 * <email>:
