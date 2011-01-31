@@ -1,6 +1,6 @@
-# nodester-cli
+# nodester-client
 
-> A command-line client for the [nodester][] platform
+> A client for the [nodester][] platform
 
 ## WARNING: THE README IS A LIE (for now)
 
@@ -8,15 +8,15 @@ In the spirit of [Readme-Driven Development][RDD], this document describes the i
 
 ## What is this I don't even.
 
-[nodester][] is an open-source platform for hosting [node][] apps, and I think that's the bee's knees. However, their [API][nodester API] - while delicious and moist - is a bit cumbersome to use with only curl. So, to fill this gap, nodester-cli should give you a nice command-line tool to interface with it. If you've used the [heroku CLI][], you'll know what we're going for here.
+[nodester][] is an open-source platform for hosting [node][] apps, and I think that's the bee's knees. However, their [API][nodester API] - while delicious and moist - is a bit cumbersome to use with only curl. So, to fill this gap, nodester-client should give you a nice command-line tool to interface with it. If you've used the [heroku CLI][], you'll know what we're going for here.
 
-Goals: assume only the tools you'd need anyway, namely [node][], [npm][], and [git][]. Whenever possible, nodester-cli uses simple conventions to avoid tedious option-passing. See [Configuration](#Configuration) for more.
+Goals: assume only the tools you'd need anyway, namely [node][], [npm][], and [git][]. Whenever possible, nodester-client uses simple conventions to avoid tedious option-passing. See [Configuration](#Configuration) for more.
 
 ## Quick start
 
 To get started quickly, install with [npm][]:
 
-    $ npm install nodester-cli
+    $ npm install nodester-client
 
 If you've already registered with nodester, deploying a new app is easy:
 
@@ -100,10 +100,10 @@ Or, install all advertised dependencies from `package.json`
 
 ### Keys
 
-nodester-cli has a small set of configuration keys, and it'll try to guess sensible defaults so you don't have to type them.
+nodester-client has a small set of configuration keys, and it'll try to guess sensible defaults so you don't have to type them.
 
 - **root**
-  * Where `nodester-cli` expects to talk to the API service
+  * Where `nodester-client` expects to talk to the API service
   * Defaults to http://nodester.com/
 - **email**
   * The email you want to receive a coupon to or register your user with
