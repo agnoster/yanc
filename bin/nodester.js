@@ -10,11 +10,18 @@ cli.setApp('nodester', '0.0.1')
 
 Object.prototype.keyList = function() { var a = []; for (i in this) if (this.hasOwnProperty(i)) a.unshift(i); return a }
 
+String.prototype.pad = function(length) {
+    var d = length - this.length + 1
+    return (d > 0) ? this + Array(d).join(' ') : this
+}
+function pad(val, length) { return (''+val).pad(length) }
+
 var notimplemented = function(args, options) {
     this.fatal("Command \"" + this.command + "\" is not yet implemented")
 }
 
 var commands = {
+
     help: function(args, options) {
         var page = 'nodester-client-' + (this.args.shift() || 'nodester')
         var fds = [ stdio.stdinFD || 0
@@ -23,9 +30,10 @@ var commands = {
                 ]
         child_process.spawn('man', [page], { customFds: fds })
     }
+
 ,   config: function(args, options) {
         function printvar(key, val, source) {
-            console.log(key + '   ' + val + '          # ' + source)
+            console.log(pad(key, 8) + ' ' + pad(val, 50) + ' # ' + source)
         }
         if (key = args.shift()) {
             if (match = /(\w+)=([\"\']?)(.*)\2$/.exec(key)) {
@@ -33,12 +41,12 @@ var commands = {
                 args.unshift(match[3])
             }
             if (val = args.shift()) {
-                config.set(key, val, function(err) {
-                    if (err) this.fatal("Error: " + err)
+                this.config.set(key, val, options.global, function(err) {
+                    if (err) this.fatal("Error: " + err.message)
                     this.ok("Set " + key + "=\"" + val + "\"")
-                })
+                }.bind(this))
             } else {
-                this.config.get(key, function(err, value, source) {
+                this.config.get(key, function(err, key, value, source) {
                     if (err) return this.fatal(err)
                     if (key == 'pass') value = value.replace(/./g, '*')
                     printvar(key, value, source)
@@ -46,8 +54,15 @@ var commands = {
             }
         } else {
             this.config.list(function(err, key, value, source) {
-                if (key == 'pass') value = value.replace(/./g, '*')
-                printvar(key, value, source)
+                if (options.freeze) {
+                    this.config.set(key, value, false, function(err, data) {
+                        if (!err) cli.ok('set ' + key + '="' + value + '"')
+                        else cli.error('failed setting ' + key)
+                    }.bind(this))
+                } else {
+                    if (key == 'pass') value = value.replace(/./g, '*')
+                    printvar(key, value, source)
+                }
             }.bind(this))
         }
     }
