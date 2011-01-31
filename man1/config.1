@@ -1,0 +1,98 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "NODESTER\-CONFIG" "1" "January 2011" "" ""
+.
+.SH "NAME"
+\fBnodester\-config\fR \- nodester CLI configuration
+.
+.SH "SYNOPSIS"
+\fBnodester\fR config [\fIkey\fR [\fIvalue\fR]]
+.
+.SH "DESCRIPTION"
+nodester has a powerful configuration system that\'s probably best left alone\. However, if you cannot be dissuaded from tinkering, here\'s what you should know:
+.
+.TP
+Command\-line flags rule
+Any key can be overridden on the commandline\. For example, the email for a coupon request can be set on the commandline like so:
+.
+.IP
+nodester coupon \-\-email=address@example\.com
+.
+.TP
+Environment variables
+The second place configuration variables can be set is in the environment\. For instance, \fBexport NODESTER_ROOT=http://api2\.nodester\.com/\fR would set the value for \fIroot\fR to \'http://api2\.nodester\.com/\' within the current shell\.
+.
+.TP
+Git config
+nodester\-client stores any configuration keys in the "nodester" section of the git config\. This means the same configuration rules as for git apply: local trumps global, which trumps system\. If you use \fBnodester config\fR to set a config key, it will either set it with \fBgit config \-\-local\fR (if you specify \fB\-\-local\fR or are in a git project), or it will set it with \fBgit config \-\-global\fR (if you specify \fB\-\-global\fR or are not in a git project)\.
+.
+.TP
+Defaults
+Out of the box, nodester tries to pick smart defaults\. In some cases, this default will be frozen to the config\. For instance, when a coupon is requested we save the email it was requested for, so that a subsequent \fBnodester register\fR will use the correct email, even if git has a different email configured in the meantime\.
+.
+.SH "KEYS"
+.
+.TP
+\fIroot\fR
+Where \fBnodester\-client\fR expects to talk to the API service
+.
+.br
+default: http://nodester\.com/
+.
+.TP
+\fIemail\fR
+Receive a coupon or register your user to this address
+.
+.br
+default: your email from git, as reported by \fBgit config user\.email\fR
+.
+.TP
+\fIuser\fR
+Your username on the nodester system
+.
+.br
+default: your system user name, as reported by \fBwhoami\fR
+.
+.TP
+\fIkey\fR
+Path to an SSH identity file
+.
+.br
+default: \fB~/\.ssh/id_rsa\.pub\fR or \fB~/\.ssh/id_dsa\.pub\fR, if available, in that order
+.
+.TP
+\fIapp\fR
+Name of the application on nodester
+.
+.br
+default: the current directory name
+.
+.TP
+\fIstart\fR
+Name of the script to run on nodester
+.
+.br
+default: "main" as described in \fBpackage\.json\fR, falls back to \fBserver\.js\fR or \fBapp\.js\fR if available, and in that order
+.
+.TP
+\fIpass\fR
+Password to authenticate with nodester
+.
+.br
+default: \.\.\. nothing\. Prompt the user every time by default\.
+.
+.TP
+\fIremote\fR
+Name of git remote to connect to nodester
+.
+.br
+default: "nodester"
+.
+.TP
+\fIbranch\fR
+Name of branch to push to nodester
+.
+.br
+default: "master"
+

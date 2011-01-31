@@ -1,0 +1,21 @@
+{
+  "name": "nodester-client",
+  "description": "A client for the nodester platform",
+  "version": "0.0.1",
+  "homepage": "https://github.com/agnoster/nodester-client/",
+  "repository": "git://github.com/agnoster/nodester-client.git",
+  "author": "Isaac Wolkerstorfer <agnoster@gmail.com> (http://agnoster.net/)",
+  "main": "nodester-client",
+  "directories": {
+    "lib": "./lib",
+    "doc": "./doc",
+    "man": "./man1",
+    "bin": "./bin"
+  },
+  "engines": {
+    "node": "~0.2.6"
+  },
+  "dependencies": {
+    "cli": "~0.2.4"
+    }
+}

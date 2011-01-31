@@ -1,0 +1,49 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "NODESTER" "1" "January 2011" "" ""
+.
+.SH "NAME"
+\fBnodester\fR \- command\-line client for nodester API
+.
+.SH "SYNOPSIS"
+\fBnodester\fR \fIcommand\fR [args]
+.
+.SH "DESCRIPTION"
+\fBnodester\fR is a command\-line client provided by the nodester\-client package\. It speaks to the nodester API \fIhttp://nodester\.com/api\.html\fR, and strives to use sane defaults for every configuration parameter\. In an ideal case, you should only have to specify config parameters if you are doing something surprising, as long as you are using \fBgit\fR and \fBnpm\fR (including a \fBpackage\.json\fR for your app)\.
+.
+.P
+The CLI itself is subdivided into separate commands\. Use \fBnodester help [command]\fR for additional information on any one, or use \fBman nodester\-command\fR\.
+.
+.TP
+\fBhelp\fR [command]
+Invoked on its own, displays this man page\. You can also pass it a specific command, and it will display the usage information for that\.
+.
+.TP
+\fBconfig\fR [\fIkey\fR [\fIval\fR]]
+View and set config variables\. Any config variable (\fIemail\fR, for instance) can be specified as a flag (\-\-email=address@example\.com), come from the config (git\-based), or be guessed at\. The guesses are usually good\.
+.
+.TP
+\fBcoupon\fR (conf: \fIemail\fR)
+Request a coupon from nodester\.
+.
+.TP
+\fBregister\fR \fIcoupon\fR (conf: \fIemail\fR, \fIuser\fR, \fIkey\fR)
+Register a user using a given \fIcoupon\fR\.
+.
+.TP
+\fBcreate\fR [\fIapp\fR] (conf: \fIuser\fR, \fIpass\fR, \fIapp\fR, \fIbranch\fR)
+Create a new application named \fIapp\fR\.
+.
+.TP
+\fBpush\fR [\-\-no\-start] (conf: \fIuser\fR, \fIpass\fR, \fIapp\fR, \fIbranch\fR)
+Push current application from branch \fIbranch\fR\. Start by default\.
+.
+.TP
+\fBstart\fR|\fBstop\fR (conf: \fIuser\fR, \fIpass\fR, \fIapp\fR)
+Start or stop current application\.
+.
+.TP
+\fBnpm\fR \fIcommand\fR [args] (conf: \fIuser\fR, \fIpass\fR, \fIapp\fR)
+Install, update, or uninstall packages for the current app\.
+
