@@ -14,8 +14,13 @@ cli.setApp('nodester', '0.0.1')
 Object.prototype.keyList = function() { var a = []; for (i in this) if (this.hasOwnProperty(i)) a.unshift(i); return a }
 
 String.prototype.pad = function(length) {
-    var d = length - this.length + 1
-    return (d > 0) ? this + Array(d).join(' ') : this
+    var prepad, d, padding
+    if (length < 0) length = -length, prepad = true
+    d = length - this.length + 1
+    if (d <= 0) return this
+    padding = Array(d).join(' ')
+    if (prepad) return padding + this
+    return this + padding
 }
 function pad(val, length) { return (''+val).pad(length) }
 
@@ -134,6 +139,20 @@ var commands = {
             }.bind(this))
         }.bind(this))
     }
+,   status: function(args, options) {
+        this.config.vars(['base', 'user', 'pass', 'app'], function(err, conf) {
+            var n = new Nodester('', '', conf.base)
+            n.status(function(err, data) {
+                if (data.status == 'up') {
+                    this.ok('The system is up.')
+                    console.log("Apps hosted:  " + pad(data.appshosted, -7))
+                    console.log("Apps running: " + pad(data.appsrunning, -7))
+                } else {
+                    this.fatal('The system is down')
+                }
+            }.bind(this))
+        }.bind(this))
+    }
 ,   restart: function(args, options) {
         this.config.vars(['base', 'user', 'pass', 'app'], function(err, conf) {
             var n = new Nodester(conf.user, conf.pass, conf.base)
@@ -219,7 +238,11 @@ var commands = {
                 } else {
                     this.spinner("# listing apps... done\n", true)
                     if (data.length) {
-                        console.log(data)
+                        c = [20, 10, 10]
+                        console.log("Name".pad(c[0]) + "Port".pad(c[1]) + "Running".pad(c[2]))
+                        for (var i = 0; i < data.length; i ++) {
+                            console.log(pad(data[i].name, c[0]) + pad(data[i].port, c[1]) + pad(data[i].running, c[2]))
+                        }
                     } else {
                         this.info('No apps found')
                     }
@@ -227,17 +250,8 @@ var commands = {
             }.bind(this))
         }.bind(this))
     }
-,   update_user: function(args, options) {
-        this.config.vars(['base', 'user', 'pass', 'key'], function(err, conf) {
-            this.ok('curl -X PUT -u "' + conf.user + ':' + conf.pass + '" --data-urlencode "rsakey@' + conf.key + '" http://' + conf.base + '/user')
-        }.bind(this))
-    }
 ,   create: function(args, options) {
         this.config.vars(['base', 'user', 'pass', 'app', 'start', 'branch', 'remote'], function(err, conf) {
-
-            var cmd = '-X POST -u "' + conf.user + ':' + conf.pass + '" -d "appname='
-                    + conf.app + '&start=' + conf.start + '" http://' + conf.base + '/app'
-            console.log(cmd);
             var api = new Nodester(conf.user, conf.pass, conf.base)
             this.spinner("# creating application " + conf.app + "... ")
             api.app_create(conf.app, conf.start, function(err, app) {
@@ -269,6 +283,10 @@ var commands = {
                 this.spinner("# deleting application " + conf.app + "... done\n", true)
                 if (err) this.fatal(err.message)
                 this.ok("Application deleted")
+                child_process.exec('git remote rm ' + conf.remote, function(err, stdout, stderr) {
+                    if (err) this.fatal("Could not remove remote: " + conf.remote)
+                    this.ok('Removed remote "' + conf.remote + '"')
+                }.bind(this))
             }.bind(this))
         }.bind(this))
     }
@@ -311,12 +329,6 @@ cli.main(function(args,options){
         child_process.exec(cmd, function(err, stdout, stderr) {
             this.spinner("# " + desc + "... done!\n", true)
             cb(err, stdout, stderr)
-        }.bind(this))
-    }.bind(this)
-    this.curl = function(desc, params, cb) {
-        this.cmd(desc, 'curl ' + params, function(err, stdout, stderr) {
-            if (err) return cb(err, stderr)
-            cb(null, JSON.parse(stdout))
         }.bind(this))
     }.bind(this)
     if (commands[this.command]) commands[this.command].apply(this, [args, options])
