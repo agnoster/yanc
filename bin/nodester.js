@@ -42,7 +42,7 @@ function takeOver(cmd, args) {
               , stdio.stdoutFD || 1
               , stdio.stderrFD || 2
               ]
-    child_process.spawn(cmd, args, { customFds: fds })
+    return child_process.spawn(cmd, args, { customFds: fds })
 }
 
 var commands = {
@@ -223,18 +223,39 @@ var commands = {
 ,   push: function(args, options) {
         this.config.vars(['branch', 'remote'], function(err, conf) {
             console.log('# pushing branch \"' + conf.branch + '\" to remote \"' + conf.remote + "\"... \n")
-            takeOver('git', ['push', conf.remote, conf.branch+':master'])
+            takeOver('git', ['push', conf.remote, conf.branch+':master']).on('exit', function(code){
+                if (code) this.fatal('Failed to push')
+                this.ok('Push successful')
+            }.bind(this))
         }.bind(this))
         
     }
+,   link: function(args, options) {
+        this.config.vars(['base', 'user', 'pass', 'remote', 'app'], function(err, conf) {
+            var api = new Nodester(conf.user, conf.pass, conf.base)
+            this.spinner('# adding remote "' + conf.remote + "\"... ")
+            api.app_info(conf.app, function (err, app) {
+                if (err) {
+                    this.spinner('# adding remote "' + conf.remote + "\"... failed\n", true)
+                    this.fatal('Failed getting app info: ' + err.message)
+                }
+                child_process.exec('git remote add ' + conf.remote + ' "' + app.gitrepo + '"', function(err, stdout, stderr) {
+                    if (err) {
+                        this.spinner('# adding remote "' + conf.remote + "\"... failed\n", true)
+                        this.fatal('Could not add git remote: ' + err.message)
+                    }
+                    this.spinner('# adding remote "' + conf.remote + "\"... done\n", true)
+                    this.ok('Added git remote: ' + conf.remote + ' -> ' + app.gitrepo)
+                }.bind(this))
+            }.bind(this))
+        }.bind(this))
+    }
 ,   save_pass: function(args, options) {
         this.info('Note: this will save your password in the global git config')
-        this.config.vars(['pass'], function(err, conf) {
-            require_password(conf, true, function(pass) {
-                this.config.set('pass', pass, true, function(err, data) {
-                    if (err) this.fatal('Failed to save password')
-                    this.ok('Saved password')
-                }.bind(this))
+        require_password({}, function(pass) {
+            this.config.set('pass', pass, true, function(err, data) {
+                if (err) this.fatal('Failed to save password')
+                this.ok('Saved password')
             }.bind(this))
         }.bind(this))
     }
