@@ -75,7 +75,7 @@ var commands = {
                     }.bind(this))
                 } else {
                     this.config.get(key, function(err, key, value, source) {
-                        if (err) return this.fatal(err)
+                        if (err) return this.fatal(err.message)
                         if (key == 'pass') value = value.replace(/./g, '*')
                         printvar(key, value, source)
                     }.bind(this))
@@ -140,7 +140,7 @@ var commands = {
         }.bind(this))
     }
 ,   status: function(args, options) {
-        this.config.vars(['base', 'user', 'pass', 'app'], function(err, conf) {
+        this.config.vars(['base'], function(err, conf) {
             var n = new Nodester('', '', conf.base)
             n.status(function(err, data) {
                 if (data.status == 'up') {
@@ -252,8 +252,10 @@ var commands = {
     }
 ,   create: function(args, options) {
         this.config.vars(['base', 'user', 'pass', 'app', 'start', 'branch', 'remote'], function(err, conf) {
+            if (err) this.fatal(err.message)
             var api = new Nodester(conf.user, conf.pass, conf.base)
             this.spinner("# creating application " + conf.app + "... ")
+            this.debug(conf)
             api.app_create(conf.app, conf.start, function(err, app) {
                 if (err) {
                     this.spinner("# creating application " + conf.app + "... failed\n", true)
