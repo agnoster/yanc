@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 ;(function(){
 
-var cli = require('../lib/cli/cli.js').enable('version', 'status').disable('help')
+var cli = require('../lib/cli.js').enable('version', 'status').disable('help')
   , stdio = process.binding('stdio')
   , child_process = require('child_process')
   , nodester = require('../nodester-client')
-  , Config = require('../lib/cli/config.js')
+  , Config = require('../lib/config.js')
   , sys = require('sys')
   , Nodester = require('nodester-api').nodester
-  , prompt = require('../lib/cli/prompt.js')
+  , prompt = require('../lib/prompt.js')
 
 Object.prototype.keyList = function() { var a = []; for (i in this) if (this.hasOwnProperty(i)) a.unshift(i); return a }
 
