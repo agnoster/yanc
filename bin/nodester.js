@@ -109,8 +109,9 @@ var commands = {
                 } else {
                     this.spinner('# Requesting coupon for ' + email + "... done!\n", true)
                     this.ok('Coupon requested. You will receive an email when capacity allows.')
-                    this.config.set('email', conf.email, true, function(err, key, value) {
-                        this.ok('Saved ' + value + ' as your email address in the global config')
+                    this.config.save({ email: conf.email, base: conf.base }, true, function(err) {
+                        if (err) this.fatal('Could not save config: ' + err.message)
+                        this.ok('Saved email address and api server in the global config')
                     }.bind(this))
                 }
             }.bind(this))
