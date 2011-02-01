@@ -364,13 +364,16 @@ cli.main(function(args,options){
     cli.setApp(cliname, '0.0.1')
     this.config = new Config(options, cliname)
     this.require_password = require_password
-    this.cmd = function(desc, cmd, cb) {
-        this.spinner("# " + desc + "... ")
-        child_process.exec(cmd, function(err, stdout, stderr) {
-            this.spinner("# " + desc + "... done!\n", true)
-            cb(err, stdout, stderr)
-        }.bind(this))
-    }.bind(this)
+
+    if (!this.command) {
+        console.log('Usage:')
+        for (var cmd in commands) {
+            if (!commands.hasOwnProperty(cmd)) continue
+            console.log('  ' + cliname + ' ' + cmd)
+        }
+        process.exit(1)
+    }
+
     if (commands[this.command]) commands[this.command].apply(this, [args, options])
     else this.fatal("could not find command " + this.command + " - try `nodester help`")
 })
