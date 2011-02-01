@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 ;(function(){
+
 var cli = require('../lib/cli/cli.js').enable('version', 'status').disable('help')
   , stdio = process.binding('stdio')
   , child_process = require('child_process')
@@ -8,8 +9,6 @@ var cli = require('../lib/cli/cli.js').enable('version', 'status').disable('help
   , sys = require('sys')
   , Nodester = require('nodester-api').nodester
   , prompt = require('../lib/cli/prompt.js')
-
-cli.setApp('nodester', '0.0.1')
 
 Object.prototype.keyList = function() { var a = []; for (i in this) if (this.hasOwnProperty(i)) a.unshift(i); return a }
 
@@ -142,13 +141,16 @@ var commands = {
     }
 ,   status: function(args, options) {
         this.config.vars(['base'], function(err, conf) {
+            this.spinner('# checking status on ' + conf.base + "... ")
             var n = new Nodester('', '', conf.base)
             n.status(function(err, data) {
                 if (data.status == 'up') {
+                    this.spinner('# checking status on ' + conf.base + "... done\n", true)
                     this.ok('The system is up.')
                     console.log("Apps hosted:  " + pad(data.appshosted, -7))
                     console.log("Apps running: " + pad(data.appsrunning, -7))
                 } else {
+                    this.spinner('# checking status on ' + conf.base + "... failed\n", true)
                     this.fatal('The system is down')
                 }
             }.bind(this))
@@ -357,7 +359,10 @@ var require_password = function(config, mustConfirm, cb) {
 
 cli.parse(null, commands.keyList())
 cli.main(function(args,options){
-    this.config = new Config(options)
+    var cliname = 'nodester'
+    if (options.cli) cliname = options.cli
+    cli.setApp(cliname, '0.0.1')
+    this.config = new Config(options, cliname)
     this.require_password = require_password
     this.cmd = function(desc, cmd, cb) {
         this.spinner("# " + desc + "... ")
