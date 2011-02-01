@@ -327,7 +327,23 @@ var commands = {
             }.bind(this))
         }.bind(this))
     }
-,   npm: notimplemented
+,   npm: function(args, options) {
+        this.config.vars(['base', 'user', 'pass', 'app'], function(err, conf) {
+            var action = args.shift()
+              , package = args.shift()
+              , n = new Nodester(conf.user, conf.pass, conf.base)
+            this.spinner("# " + action + " " + package + "... ")
+            n.appnpm_handler(conf.app, package, action, function(err, data) {
+                if (err) {
+                    this.spinner("# " + action + " " + package + "... failed\n", true)
+                    this.fatal(err.message)
+                }
+                this.spinner("# " + action + " " + package + "... done\n", true)
+                this.ok('success')
+                console.log(data.output)
+            }.bind(this))
+        }.bind(this))
+    }
 }
 
 var require_password = function(config, mustConfirm, cb) {
