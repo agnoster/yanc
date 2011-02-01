@@ -175,6 +175,17 @@ var commands = {
             }.bind(this))
         }.bind(this))
     }
+,   unregister: function(args, options) {
+        this.config.vars(['base', 'user', 'pass'], function(err, conf) {
+            var n = new Nodester(conf.user, conf.pass, conf.base)
+            this.spinner("# deleting user... ")
+            n.user_delete(conf.user, function(err, data) {
+                this.spinner("# deleting user... done!\n", true)
+                if (err) this.fatal(err.message)
+                this.ok('user ' + conf.user + ' deleted')
+            }.bind(this))
+        }.bind(this))
+    }
 ,   register: function(args, options) {
         var coupon = args.shift()
         if (!coupon) this.fatal('Must include a coupon code!')
