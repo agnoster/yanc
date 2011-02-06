@@ -1,21 +1,20 @@
-nodester(1) -- command-line client for nodester API
+yanc(1) -- Yet Another Nodester CLI
 ===================================================
 
 ## SYNOPSIS
 
-`nodester` <command> [args]
+`yanc` <command> [args]
 
 ## DESCRIPTION
 
-`nodester` is a command-line client provided by the nodester-client
-package. It speaks to the [nodester API][], and strives to use sane
+`yanc` is a command-line client that speaks to the [nodester API][], and strives to use sane
 defaults for every configuration parameter. In an ideal case, you
 should only have to specify config parameters if you are doing something
 surprising, as long as you are using `git` and `npm` (including a
 `package.json` for your app).
 
-The CLI itself is subdivided into separate commands. Use `nodester help [command]`
-for additional information on any one, or use `man nodester-command`.
+The CLI itself is subdivided into separate commands. Use `yanc help [command]`
+for additional information on any one, or use `man yanc-command`.
 
 * `help` [command]:
   Invoked on its own, displays this man page. You can also pass it a

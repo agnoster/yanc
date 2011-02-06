@@ -1,13 +1,13 @@
-nodester-config(1) -- nodester CLI configuration
+yanc-config(1) -- yanc CLI configuration
 ================================================
 
 ## SYNOPSIS
 
-`nodester` config [<key> [<value>]]
+`yanc` config [<key> [<value>]]
 
 ## DESCRIPTION
 
-nodester has a powerful configuration system that's probably best
+yanc has a powerful configuration system that's probably best
 left alone. However, if you cannot be dissuaded from tinkering, here's
 what you should know:
 
@@ -15,7 +15,7 @@ what you should know:
   Any key can be overridden on the commandline. For example, the email
   for a coupon request can be set on the commandline like so:
 
-    nodester coupon --email=address@example.com
+    yanc coupon --email=address@example.com
 
 * Environment variables:
   The second place configuration variables can be set is in the environment.
@@ -23,23 +23,23 @@ what you should know:
   the value for <root> to 'http://api2.nodester.com/' within the current shell.
 
 * Git config:
-  nodester-client stores any configuration keys in the "nodester" section of
+  yanc stores any configuration keys in the "nodester" section of
   the git config. This means the same configuration rules as for git apply: local
-  trumps global, which trumps system. If you use `nodester config` to set a
+  trumps global, which trumps system. If you use `yanc config` to set a
   config key, it will either set it with `git config --local` (if you specify
   `--local` or are in a git project), or it will set it with `git config --global`
   (if you specify `--global` or are not in a git project).
 
 * Defaults:
-  Out of the box, nodester tries to pick smart defaults. In some cases, this default
+  Out of the box, yanc tries to pick smart defaults. In some cases, this default
   will be frozen to the config. For instance, when a coupon is requested we save the
-  email it was requested for, so that a subsequent `nodester register` will use the
+  email it was requested for, so that a subsequent `yanc register` will use the
   correct email, even if git has a different email configured in the meantime.
 
 ## KEYS
 
 * _base_:
-  Server where `nodester-client` expects to talk to the API service  
+  Server where `yanc` expects to talk to the API service  
   default: "api.nodester.com"
 * <email>:
   Receive a coupon or register your user to this address  

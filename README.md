@@ -1,6 +1,6 @@
-# nodester-client
+# yanc
 
-> A client for the [nodester][] platform
+> Yet Another [Nodester][nodester] Client
 
 ## WARNING: THE README IS A LIE (for now)
 
@@ -8,24 +8,24 @@ In the spirit of [Readme-Driven Development][RDD], this document describes the i
 
 ## What is this I don't even.
 
-[nodester][] is an open-source platform for hosting [node][] apps, and I think that's the bee's knees. However, their [API][nodester API] - while delicious and moist - is a bit cumbersome to use with only curl. So, to fill this gap, nodester-client should give you a nice command-line tool to interface with it. If you've used the [heroku CLI][], you'll know what we're going for here.
+[nodester][] is an open-source platform for hosting [node][] apps, and I think that's the bee's knees. However, their [API][nodester API] - while delicious and moist - is a bit cumbersome to use with only curl. So, to fill this gap, yanc should give you a nice command-line tool to interface with it. If you've used the [heroku CLI][], you'll know what we're going for here.
 
-Goals: assume only the tools you'd need anyway, namely [node][], [npm][], and [git][]. Whenever possible, nodester-client uses simple conventions to avoid tedious option-passing. See [Configuration](#Configuration) for more.
+Goals: assume only the tools you'd need anyway, namely [node][], [npm][], and [git][]. Whenever possible, yanc uses simple conventions to avoid tedious option-passing. See [Configuration](#Configuration) for more.
 
 ## Quick start
 
 To get started quickly, install with [npm][]:
 
-    $ npm install nodester-client
+    $ npm install yanc
 
 If you've already registered with nodester, deploying a new app is easy:
 
     $ cd ~/projects/pantscompetition/
-    $ nodester create
+    $ yanc create
     +OK app pantscompetition created, added remote nodester
-    $ nodester push
+    $ yanc push
     +OK pushed branch master to nodester
-    $ nodester start
+    $ yanc start
     +OK app pantscompetetion started
 
 That should do it!
@@ -34,19 +34,19 @@ That should do it!
 
 ### Check [nodester] status
 
-    $ nodester status
+    $ yanc status
     +OK Nodester is up
     Apps hosted: 73
     Apps running: 20
 
 ### Request a coupon
 
-    $ nodester coupon
+    $ yanc coupon
     +OK Coupon will be sent to my_email@from-git-config.com
 
 ### Register a user
 
-    $ nodester register MYCOUPONCODE
+    $ yanc register MYCOUPONCODE
     # registering user with following information:
     Username: fancypants
     Email: fancy@pants.org
@@ -61,33 +61,33 @@ That should do it!
 
 ### Creating an app
 
-    $ nodester create
+    $ yanc create
     +OK created application pantscompetition
     # added remote nodester
 
 ### Pushing app
 
-    $ nodester push
+    $ yanc push
     # pushing to remote nodester from branch master
     +OK push received
 
 ### Starting/stopping app
 
-    $ nodester start
+    $ yanc start
     +OK app pantscompetition started
-    $ nodester stop
+    $ yanc stop
     +OK app pantscompetition stopped
 
 ### Installing/upgrading packages
 
-    $ nodester npm install express
+    $ yanc npm install express
     +OK installed package express@1.0.0 in app pantscompetition
-    $ nodester npm uninstall express
+    $ yanc npm uninstall express
     +OK uninstalled package express in app pantscompetition
 
 Or, install all advertised dependencies from `package.json`
 
-    $ nodester npm install
+    $ yanc npm install
     # resolving dependencies from package.json...
     +OK installed package express@1.0.3 
     +OK installed package socket.io@0.6.8
@@ -100,10 +100,10 @@ Or, install all advertised dependencies from `package.json`
 
 ### Keys
 
-nodester-client has a small set of configuration keys, and it'll try to guess sensible defaults so you don't have to type them.
+yanc has a small set of configuration keys, and it'll try to guess sensible defaults so you don't have to type them.
 
 - **base**
-  * Server where `nodester-client` expects to talk to the API service
+  * Server where `yanc` expects to talk to the API service
   * Defaults to `api.nodester.com`
 - **email**
   * The email you want to receive a coupon to or register your user with
@@ -136,7 +136,7 @@ You can specify a value for any key by passing `--configkey="value"` on the comm
 
 You can also use `nodester config`:
 
-    $ nodester config
+    $ yanc config
     user   fancypants                         # source: whoami
     email  fancy@pants.org                    # source: git config user.email
     key    /home/fancypants/.ssh/id_rsa.pub   # source: default
@@ -145,15 +145,15 @@ You can also use `nodester config`:
 
 Setting a config variable works, too:
 
-    $ nodester config app "pantscompetition"
+    $ yanc config app "pantscompetition"
     # in a .git project, setting local configuration
     app    pantscompetition                   # source: git config nodester.app
-    $ nodester config pass --prompt --global
+    $ yanc config pass --prompt --global
     Password:
     Confirm:
     # set global configuration
     pass   **************                     # source: git config nodester.pass
-    $ nodester config user "fancy" --global
+    $ yanc config user "fancy" --global
     # set global configuration
     user   fancy                              # source: git config nodester.app
 

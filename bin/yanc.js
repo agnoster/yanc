@@ -4,7 +4,6 @@
 var cli = require('../lib/cli.js').enable('version', 'status').disable('help')
   , stdio = process.binding('stdio')
   , child_process = require('child_process')
-  , nodester = require('../nodester-client')
   , Config = require('../lib/config.js')
   , sys = require('sys')
   , Nodester = require('nodester-api').nodester

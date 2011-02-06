@@ -1,11 +1,11 @@
 {
-  "name": "nodester-client",
-  "description": "A client for the nodester platform",
+  "name": "yanc",
+  "description": "Yet Another Nodester CLI",
   "version": "0.0.1",
-  "homepage": "https://github.com/agnoster/nodester-client/",
-  "repository": "git://github.com/agnoster/nodester-client.git",
+  "homepage": "https://github.com/agnoster/yanc/",
+  "repository": "git://github.com/agnoster/yanc.git",
   "author": "Isaac Wolkerstorfer <agnoster@gmail.com> (http://agnoster.net/)",
-  "main": "nodester-client",
+  "main": "yanc",
   "directories": {
     "lib": "./lib",
     "doc": "./doc",
