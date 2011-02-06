@@ -46,12 +46,13 @@ child_process.takeOver = function(cmd, args) {
 
 var commands = {
     help: { doc: "Read the man page for a given command", params: ['command'] }
-,   config: { doc: "Read and write configuration information", params: ['key', 'value'] }
+,   config: { doc: [["", "Show configuration information"], ["<key>", "Read the value of the configuration key"], ["<key> <value>", "Set the value of the given key"]], params: ['key', 'value'] }
 ,   status: { doc: "Get status of the service", params: ['base'], config: ['base'] }
 ,   coupon: { doc: "Request a coupon for registration", params: ['email'], config: ['email', 'base'] }
-,   register: { doc: "Register a user", params: ['coupon', 'user', 'email', 'key', 'base'], config: ['email', 'key'], auth: true }
+,   register: { doc: ["<coupon>", "Register a user"], params: ['coupon', 'user', 'email', 'key', 'base'], config: ['email', 'key'], auth: true }
 ,   unregister: { doc: "Delete the user", params: ['user'], config: ['base'], auth: true }
 ,   info: { doc: "Get information about the current app", params: ['app'], config: ['app'], auth: true }
+,   logs: { doc: "Get logs for the current app", params: ['app'], config: ['app'], auth: true }
 ,   start: { doc: "Start the app", params: ['app'], config: ['app'], auth: true }
 ,   restart: { doc: "Restart the app", params: ['app'], config: ['app'], auth: true }
 ,   stop: { doc: "Stop the app", params: ['app'], config: ['app'], auth: true }
@@ -61,7 +62,8 @@ var commands = {
 ,   list: { doc: "List all apps", params: ['user', 'base'], auth: true }
 ,   create: { doc: "Create an app on the server", params: ['app', 'start', 'remote', 'branch'], config: ['app', 'start', 'remote', 'branch'], auth:true }
 ,   "delete": { doc: "Delete an app on the server", params: ['app', 'remote'], config: ['app', 'remote'], auth: true }
-,   npm: { doc: "Install, update, and uninstall npm packages on the server", params: ['action', 'package', 'app'], config: ['app'], auth: true }
+,   npm: { doc: [["install <package>", "Install an npm package on the server"], ["uninstall <package>", "Uninstall the given package"], ["update <package>", "Update the package"], ["deps", "Install all dependencies on server declared in package.json"]], params: ['action', 'package', 'app'], config: ['app'], auth: true }
+,   domain: { doc: [["add <domain>", "Add a domain alias"], ["delete <domain>", "Remove domain alias"]], params: ['action', 'domain', 'app'], config: ['app'], auth: true }
 }
 
 var require_password = function(config, mustConfirm, cb) {
@@ -93,18 +95,33 @@ var require_password = function(config, mustConfirm, cb) {
 
 cli.parse(null, commands.keyList())
 
-cli.main(function(args,options){
-    var cliname = 'nodester'
+function usage(name) {
+    var command = commands[name]
+    var doc = command.doc
+    if (typeof doc != 'object') {
+        doc = ['', doc]
+    }
+    if (typeof doc[0] != 'object') {
+        doc = [doc]
+    }
+    for (var i = 0; i < doc.length; i++) {
+        console.log('  ' + (name + ' ' + doc[i][0]).pad(35) + ' # ' + doc[i][1])
+    }
+}
+
+cli.main(function(args, options){
+    var cliname = 'yanc'
     if (options.cli) cliname = options.cli
-    cli.setApp(cliname, '0.0.1')
+    cli.setApp(cliname, '0.0.2')
     this.require_password = require_password
     this.dump_app = dump_app
 
     if (!this.command) {
-        console.log('Usage:')
+        console.log('Usage: ' + cliname + ' <command> [arguments]')
+        console.log('Commands: ')
         for (var cmd in commands) {
             if (!commands.hasOwnProperty(cmd)) continue
-            console.log('  ' + cliname + ' ' + cmd)
+            usage(cmd)
         }
         process.exit(1)
     }
