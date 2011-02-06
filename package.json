@@ -1,7 +1,7 @@
 {
   "name": "yanc",
   "description": "Yet Another Nodester CLI",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/agnoster/yanc/",
   "repository": "git://github.com/agnoster/yanc.git",
   "author": "Isaac Wolkerstorfer <agnoster@gmail.com> (http://agnoster.net/)",

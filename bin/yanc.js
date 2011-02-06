@@ -112,7 +112,7 @@ function usage(name) {
 cli.main(function(args, options){
     var cliname = 'yanc'
     if (options.cli) cliname = options.cli
-    cli.setApp(cliname, '0.0.2')
+    cli.setApp(cliname, '0.0.3')
     this.require_password = require_password
     this.dump_app = dump_app
 
