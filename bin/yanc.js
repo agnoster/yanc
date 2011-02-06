@@ -49,7 +49,7 @@ var commands = {
 ,   config: { doc: [["", "Show configuration information"], ["<key>", "Read the value of the configuration key"], ["<key> <value>", "Set the value of the given key"]], params: ['key', 'value'] }
 ,   status: { doc: "Get status of the service", params: ['base'], config: ['base'] }
 ,   coupon: { doc: "Request a coupon for registration", params: ['email'], config: ['email', 'base'] }
-,   register: { doc: ["<coupon>", "Register a user"], params: ['coupon', 'user', 'email', 'key', 'base'], config: ['email', 'key'], auth: true }
+,   register: { doc: ["<coupon>", "Register a user"], params: ['coupon', 'user', 'email', 'key', 'base'], config: ['email', 'key'], auth: true, noprompt: true }
 ,   unregister: { doc: "Delete the user", params: ['user'], config: ['base'], auth: true }
 ,   info: { doc: "Get information about the current app", params: ['app'], config: ['app'], auth: true }
 ,   logs: { doc: "Get logs for the current app", params: ['app'], config: ['app'], auth: true }
@@ -162,6 +162,9 @@ cli.main(function(args, options){
             }
             this.config = new Config(options, cliname)
             if (command.config) {
+                if (command.noprompt) {
+                    this.config.noprompt = true
+                }
                 this.config.vars(command.config, function(err, conf) {
                     if (err) return this.fatal(err.message)
                     this.conf = conf

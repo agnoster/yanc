@@ -1,23 +1,23 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "NODESTER\-CONFIG" "1" "January 2011" "" ""
+.TH "YANC\-CONFIG" "1" "February 2011" "" ""
 .
 .SH "NAME"
-\fBnodester\-config\fR \- nodester CLI configuration
+\fByanc\-config\fR \- yanc CLI configuration
 .
 .SH "SYNOPSIS"
-\fBnodester\fR config [\fIkey\fR [\fIvalue\fR]]
+\fByanc\fR config [\fIkey\fR [\fIvalue\fR]]
 .
 .SH "DESCRIPTION"
-nodester has a powerful configuration system that\'s probably best left alone\. However, if you cannot be dissuaded from tinkering, here\'s what you should know:
+yanc has a powerful configuration system that\'s probably best left alone\. However, if you cannot be dissuaded from tinkering, here\'s what you should know:
 .
 .TP
 Command\-line flags rule
 Any key can be overridden on the commandline\. For example, the email for a coupon request can be set on the commandline like so:
 .
 .IP
-nodester coupon \-\-email=address@example\.com
+yanc coupon \-\-email=address@example\.com
 .
 .TP
 Environment variables
@@ -25,17 +25,17 @@ The second place configuration variables can be set is in the environment\. For 
 .
 .TP
 Git config
-nodester\-client stores any configuration keys in the "nodester" section of the git config\. This means the same configuration rules as for git apply: local trumps global, which trumps system\. If you use \fBnodester config\fR to set a config key, it will either set it with \fBgit config \-\-local\fR (if you specify \fB\-\-local\fR or are in a git project), or it will set it with \fBgit config \-\-global\fR (if you specify \fB\-\-global\fR or are not in a git project)\.
+yanc stores any configuration keys in the "nodester" section of the git config\. This means the same configuration rules as for git apply: local trumps global, which trumps system\. If you use \fByanc config\fR to set a config key, it will either set it with \fBgit config \-\-local\fR (if you specify \fB\-\-local\fR or are in a git project), or it will set it with \fBgit config \-\-global\fR (if you specify \fB\-\-global\fR or are not in a git project)\.
 .
 .TP
 Defaults
-Out of the box, nodester tries to pick smart defaults\. In some cases, this default will be frozen to the config\. For instance, when a coupon is requested we save the email it was requested for, so that a subsequent \fBnodester register\fR will use the correct email, even if git has a different email configured in the meantime\.
+Out of the box, yanc tries to pick smart defaults\. In some cases, this default will be frozen to the config\. For instance, when a coupon is requested we save the email it was requested for, so that a subsequent \fByanc register\fR will use the correct email, even if git has a different email configured in the meantime\.
 .
 .SH "KEYS"
 .
 .TP
 \fIbase\fR
-Server where \fBnodester\-client\fR expects to talk to the API service
+Server where \fByanc\fR expects to talk to the API service
 .
 .br
 default: "api\.nodester\.com"

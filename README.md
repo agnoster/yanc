@@ -22,11 +22,11 @@ If you've already registered with nodester, deploying a new app is easy:
 
     $ cd ~/projects/pantscompetition/
     $ yanc create
-    +OK app pantscompetition created, added remote nodester
+    OK: app pantscompetition created, added remote nodester
     $ yanc push
-    +OK pushed branch master to nodester
+    OK: pushed branch master to nodester
     $ yanc start
-    +OK app pantscompetetion started
+    OK: app pantscompetetion started
 
 That should do it!
 
@@ -35,65 +35,91 @@ That should do it!
 ### Check [nodester] status
 
     $ yanc status
-    +OK Nodester is up
-    Apps hosted: 73
-    Apps running: 20
+    # Checking status on api.nodester.com... done
+    OK: The system is up!
+    Apps hosted:      152
+    Apps running:      74
 
 ### Request a coupon
 
     $ yanc coupon
-    +OK Coupon will be sent to my_email@from-git-config.com
+    # Requesting coupon for email-from@my-git-config.com... done
+    OK: Coupon requested. You will receive an email when capacity allows.
+    OK: Saved email address and api server in the global config
 
 ### Register a user
 
     $ yanc register MYCOUPONCODE
-    # registering user with following information:
+    INFO: Registering user with the following information:
     Username: fancypants
-    Email: fancy@pants.org
-    Key: ~/.ssh/id_rsa.pub =
-    ssh-rsa Q2hhbmNlcyBhcmUgeW91ciBwYW50cyBhcmUgbm90IGFzIGZhbmN5IGFzIHRoZSBwYWlyIApPZiB2ZXJ5IGZhbmN5IHBhbnRzIHRoYXQgTXIuIEZhbmN5IFBhbnRzIHdpbGwgd2VhciAKV2hlbiBldmVyeWJvZHnigJlzIG1hcmNoaW5nIGluIHRoZSBmYW5jeSBwYW50cyBwYXJhZGUgCkhl4oCZcyBnb25uYSBwYXNzIHRoZSB0ZXN0IApIZeKAmXMgZ29ubmEgYmUgdGhlIGJlc3QgClRoZSBiZXN0IGluIHRlcm1zIG9mIHBhbnRzIAoKWW91IGxvb2sgaW4gZXZlcnkgY2F0YWxvZyB5b3Ugc2hvcCBhdCBldmVyeSBzdG9yZSAKQ2F1c2UgZXZlbiB0aG91Z2ggeW91IGhhdmUgYSBodW5kcmVkIHBhbnRzIHlvdSB3YW50IHNvbWUgbW9yZSAKV2hlbiBzdWRkZW5seSB5b3Ugc2VlIHRoZSBncmVhdGVzdCBwYW50cyB5b3XigJl2ZSBldmVyIHNlZW4gCkFuZCBldmVuIHRob3VnaCB5b3Uga25vdyAKSXTigJlzIGdvbm5hIGNvc3QgYSBsb3Qgb2YgZG91Z2ggCllvdSBoYXZlIHRvIGhhdmUgdGhlIHdvcmxk4oCZcyBiZXN0IHBhbnRzIAoKU2F5IGEgbGl0dGxlIHByYXllciBmb3IgTXIuIEZhbmN5IFBhbnRzIApUaGUgd2hvbGUgd29ybGQga25vd3MgClRoZXnigJlyZSBvbmx5IGNsb3RoZXMgCkFuZCBkZWVwIGluc2lkZSAKSGXigJlzIHNhZCAKClRoZXkgbWFrZSB0aGUgYmlnIGFubm91bmNlbWVudCBhbmQgdGhlIHRyb3BoeSBnb2VzIHRvIHlvdSAKWW91IHRob3VnaHQgeW91IGhhZCBzb21lIGZhbmN5IHBhbnRzIGFuZCBub3cgeW91IGtub3cgaXTigJlzIHRydWUgCllvdSBsb29rIGF0IE1yLiBGYW5jeSBQYW50cyBhbmQgaG9sZCB0aGUgdHJvcGh5IGhpZ2ggCkV2ZXJ5Ym9keSBjaGVlcnMgCldoaWxlIGhl4oCZcyBibGlua2luZyBiYWNrIHRoZSB0ZWFycyAKSGUgZG9lc27igJl0IGV2ZW4gaGF2ZSB0aGUgYmVzdCBwYW50cyAKClNheSBhIGxpdHRsZSBwcmF5ZXIgZm9yIE1yLiBGYW5jeSBQYW50cyAKSXTigJlzIGFsbCBoZSBoYWQgCkJ1dCBkb27igJl0IGZlZWwgYmFkIApIZeKAmWQgZG8gdGhlIHNhbWUgClRvIHlvdQo= fancy@pants
-    # if any information is incorrect, press Ctrl-C to abort and use "nodester config"
-    # please enter and confirm a password, or press Ctrl-C to abort
-    Password:
-    Confirm:
-    # registering user...
-    +OK user fancypants registered successfully
+       Email: fancy@pants.com
+      Coupon: MYCOUPONCODE
+     SSH Key: /Users/fancypants/.ssh/id_rsa.pub
+      Server: api.nodester.com
+    INFO: If anything is incorrect, abort with Ctrl-C and use "nodester config"
+    Password: ********
+    Confirm password: ********
+    # Registering user "fancypants"... done
+    OK: User created
+    OK: Saved user information in global config
 
 ### Creating an app
 
     $ yanc create
-    +OK created application pantscompetition
-    # added remote nodester
+    # Creating application "pantscompetetion"... done
+    OK: Application created successfully
+    Name:     pantscompetetion
+    Running:  false
+    Port:     8375
+    Git repo: ec2-user@nodester.com:/home/ec2-user/hosted_apps/fancypants/222-c4d515bd6f0df4ac625d33daab98f4e6.git
+    Start:    server.js
+    PID:      unknown
+    OK: Added git remote: yanc
+    OK: Saved app name, remote, and branch settings
 
 ### Pushing app
 
     $ yanc push
-    # pushing to remote nodester from branch master
-    +OK push received
+    # Pushing branch "master" to remote "yanc"... 
+
+    Counting objects: 103, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (102/102), done.
+    Writing objects: 100% (103/103), 39.22 KiB, done.
+    Total 103 (delta 44), reused 0 (delta 0)
+    remote: From /home/ec2-user/hosted_apps/fancypants/222-c4d515bd6f0df4ac625d33daab98f4e6.git/.
+    remote:  * [new branch]      master     -> origin/master
+    remote: cat: .app.pid: No such file or directory
+    remote: kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
+    To ec2-user@nodester.com:/home/ec2-user/hosted_apps/fancypants/222-c4d515bd6f0df4ac625d33daab98f4e6.git
+    * [new branch]      master -> master
+    OK: Push successful
 
 ### Starting/stopping app
 
     $ yanc start
-    +OK app pantscompetition started
+    # Starting app "pantscompetition"... done
+    OK: App domainzomg started
     $ yanc stop
-    +OK app pantscompetition stopped
+    # Stopping app "pantscompetition"... done
+    OK: App domainzomg stopped
 
 ### Installing/upgrading packages
 
     $ yanc npm install express
-    +OK installed package express@1.0.0 in app pantscompetition
+    OK: installed package express@1.0.0 in app pantscompetition
     $ yanc npm uninstall express
-    +OK uninstalled package express in app pantscompetition
+    OK: uninstalled package express in app pantscompetition
 
 Or, install all advertised dependencies from `package.json`
 
-    $ yanc npm install
+    $ yanc npm deps
     # resolving dependencies from package.json...
-    +OK installed package express@1.0.3 
-    +OK installed package socket.io@0.6.8
-    +OK installed package jquery@1.4.4
-    +OK installed package request@1.0.0
-    +OK installed package jsdom@0.1.20
+    OK: installed package express@1.0.3 
+    OK: installed package socket.io@0.6.8
+    OK: installed package jquery@1.4.4
+    OK: installed package request@1.0.0
+    OK: installed package jsdom@0.1.20
 
 
 ## Configuration
