@@ -1,6 +1,6 @@
-# yanc
+# yanc: Yet Another [Nodester][nodester] Client
 
-> Yet Another [Nodester][nodester] Client
+> **STATUS: Defunct** - When I started this CLI, there was no official nodester CLI. Just around when I finished it, the [official CLI client](https://github.com/nodester/nodester-cli) was released. It was still a fun project because I got to learn a lot about writing CLI apps in node.js, but you're *much* better off taking a look at the official client.
 
 ## WARNING: THE README IS A LIE (for now)
 
